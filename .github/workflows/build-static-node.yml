@@ -36,9 +36,6 @@ jobs:
       fail-fast: false
       matrix:
         IMAGE:
-          - {RUNNER: "ubuntu-latest", MANYLINUX_ARCH: "x86_64"}
-          - {RUNNER: "ubuntu-24.04-arm", MANYLINUX_ARCH: "aarch64"}
-          - {RUNNER: "ubuntu-24.04-ppc64le", MANYLINUX_ARCH: "ppc64le"}
           - {RUNNER: "ubuntu-24.04-riscv", MANYLINUX_ARCH: "riscv64", MANYLINUX_TAG: "manylinux_2_39"}
         NODE_CONFIG: ${{ fromJson(needs.load-node-versions.outputs.versions) }}
     steps:
