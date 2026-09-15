@@ -1,6 +1,6 @@
 FROM alpine:latest
 ARG VERSION
-# One of x64 or arm64 or ppc64le
+# One of x64 or arm64 or ppc64le or riscv64
 ARG ARCH
 # The sha256sum for the node source tarball
 ARG SHA256SUM

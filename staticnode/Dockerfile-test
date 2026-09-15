@@ -1,6 +1,8 @@
 ARG MANYLINUX_ARCH
 ARG CONTAINER_NAME
+# riscv64 has no manylinux2014 image; needs a newer manylinux tag
+ARG MANYLINUX_TAG=manylinux2014
 FROM ${CONTAINER_NAME} AS staticnodejs
-FROM quay.io/pypa/manylinux2014_${MANYLINUX_ARCH}
+FROM quay.io/pypa/${MANYLINUX_TAG}_${MANYLINUX_ARCH}
 
 COPY --from=staticnodejs /out /staticnode/
