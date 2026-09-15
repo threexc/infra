@@ -8,7 +8,9 @@ ARG SHA256SUM
 RUN mkdir -p /build
 WORKDIR /build
 
-RUN apk add --no-cache binutils-gold curl g++ gcc gnupg libgcc linux-headers make ninja python3 libstdc++ patch
+# binutils-gold has no riscv64 support in Alpine; falls back to ld.bfd there
+RUN apk add --no-cache curl g++ gcc gnupg libgcc linux-headers make ninja python3 libstdc++ patch && \
+    if [ "$ARCH" != "riscv64" ]; then apk add --no-cache binutils-gold; fi
 RUN mkdir -p /out/bin
 
 RUN curl -O https://nodejs.org/dist/$VERSION/node-$VERSION.tar.gz
