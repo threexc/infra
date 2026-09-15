@@ -30,7 +30,10 @@ RUN cd node-$VERSION && \
       ppc64le) CPU=ppc64 ;; \
       *) CPU="$ARCH" ;; \
     esac && \
-    ./configure --dest-cpu=$CPU --fully-static --ninja --without-inspector --with-intl=none --without-npm --without-corepack && \
+    OPENSSL_ASM_FLAG="" && \
+    # '-m64' doesn't work for riscv64, so drop asm
+    if [ "$ARCH" = "riscv64" ]; then OPENSSL_ASM_FLAG="--openssl-no-asm"; fi && \
+    ./configure --dest-cpu=$CPU --fully-static --ninja --without-inspector --with-intl=none --without-npm --without-corepack $OPENSSL_ASM_FLAG && \
     ninja -j$(nproc) -C out/Release node
 
 RUN cp /build/node-$VERSION/LICENSE /out/LICENSE && cp /build/node-$VERSION/out/Release/node /out/bin/node
